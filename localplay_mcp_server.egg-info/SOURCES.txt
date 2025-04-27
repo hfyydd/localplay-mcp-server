@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+server.py
+localplay_mcp_server.egg-info/PKG-INFO
+localplay_mcp_server.egg-info/SOURCES.txt
+localplay_mcp_server.egg-info/dependency_links.txt
+localplay_mcp_server.egg-info/requires.txt
+localplay_mcp_server.egg-info/top_level.txt

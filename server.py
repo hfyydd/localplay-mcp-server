@@ -11,6 +11,7 @@ from typing import Optional, Tuple
 import pyautogui
 
 from mcp.server.fastmcp import Context, FastMCP
+from fastapi import FastAPI
 
 # Add lifecycle management for the application
 @asynccontextmanager
@@ -29,6 +30,10 @@ async def lifespan(app) -> AsyncIterator[None]:
 # Specify dependencies for deployment and development
 mcp = FastMCP("LocalPlay", dependencies=["pyautogui"], lifespan=lifespan)
 
+# 添加健康检查端点
+@mcp.app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "LocalPlay MCP Server"}
 
 @mcp.tool()
 def move_mouse(ctx: Context, x: int, y: int, duration: float = 0.5, click: bool = False, button: str = 'left') -> str:
@@ -153,4 +158,21 @@ def mouse_scroll(ctx: Context, clicks: int, x: Optional[int] = None, y: Optional
 
 
 if __name__ == "__main__":
-    mcp.run(transport='stdio')
+    import sys
+    import os
+    
+    # 检查运行环境
+    transport = os.environ.get('MCP_TRANSPORT', 'stdio')
+    port = int(os.environ.get('PORT', 8080))
+    host = os.environ.get('HOST', '0.0.0.0')
+    
+    # 根据环境变量或参数决定启动方式
+    if len(sys.argv) > 1 and sys.argv[1] == '--http':
+        print(f"Starting MCP server on {host}:{port}")
+        mcp.run(transport='http', host=host, port=port)
+    elif transport == 'http':
+        print(f"Starting MCP server on {host}:{port}")
+        mcp.run(transport='http', host=host, port=port)
+    else:
+        print("Starting MCP server with stdio transport")
+        mcp.run(transport='stdio')
