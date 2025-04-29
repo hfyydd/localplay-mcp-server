@@ -74,3 +74,9 @@ The server currently implements the following mouse control features:
 3. 鼠标拖拽 | Mouse Drag: 从起始位置拖拽到目标位置 | Drag from a starting position to a target position
 4. 鼠标滚动 | Mouse Scroll: 执行向上或向下的滚动操作 | Perform scrolling operations up or down
 
+## 许可证 | License
+
+本项目基于MIT许可证开源。详情请查看[LICENSE](LICENSE)文件。
+
+This project is open-sourced under the MIT License. See the [LICENSE](LICENSE) file for details.
+
